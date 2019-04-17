@@ -18,6 +18,8 @@ public class Roleta extends Normalizacao implements ISelecao {
 	@Override
 	public Individuo[] selecionar(ArrayList<Individuo> populacao) {
 
+		this.populacao = populacao;
+		
 		double[] fitness = new double[populacao.size()];
 
 		fitness = retornaFitness(populacao);
