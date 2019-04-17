@@ -16,7 +16,7 @@ import Avaliacao.AvaliacaoF6Modificada;
 import ComportamentoAG.Elitista;
 import ComportamentoAG.EstadoEstacionario;
 import Individuos.Individuo;
-import Muta��o.GeneAGene;
+import Mutação.GeneAGene;
 import Selecao.Roleta;
 
 class AG_F6Cruzamentos {
@@ -71,7 +71,7 @@ class AG_F6Cruzamentos {
 			fitnessPopulacao += (double) individuo.getFitness();
 		}
 
-		// Ranqueia população
+		// Ranqueia populaÃ§Ã£o
 		this.rank();
 
 		this.insereNoGrafico(fitnessPopulacao, 0);
@@ -99,7 +99,7 @@ class AG_F6Cruzamentos {
 					pai2 = pais[1];
 				}
 				// Cruzamento dos pais de acordo com a probabilidade e
-				// Mutação
+				// MutaÃ§Ã£o
 				// de acordo com probabilidade
 				if (random.nextDouble() <= this.probCruz) {
 					// Cruzamento
@@ -127,7 +127,7 @@ class AG_F6Cruzamentos {
 			// Ranqueia populacao
 			this.rank();
 			/*
-			 * System.out.println(""); System.out.println("Itera�ao: " + iteracao); double[]
+			 * System.out.println(""); System.out.println("Iteraçao: " + iteracao); double[]
 			 * XY = this.converteBinarioEmReal(melhorIndividuo.getCromossomo());
 			 * System.out.println("Melhor Individuo: " + melhorIndividuo.getCromossomo() +
 			 * ": " + XY[0] + " " + XY[1] + " : " + melhorIndividuo.getFitness());
@@ -168,7 +168,7 @@ class AG_F6Cruzamentos {
 		execMediaPop[iteracao] = fitnessPopulacao / this.populacao.size();
 	}
 
-	// Gerar população inicial de numeros reais
+	// Gerar populaÃ§Ã£o inicial de numeros reais
 	private ArrayList<Individuo> populacaoInicialReais(int tamanhoPopulacao) {
 
 		ArrayList<Individuo> populacaoInicial = new ArrayList<Individuo>();
@@ -194,7 +194,7 @@ class AG_F6Cruzamentos {
 		return populacaoInicial;
 	}
 
-	// Gerar população inicial de numeros reais por arquivo
+	// Gerar populaÃ§Ã£o inicial de numeros reais por arquivo
 	private ArrayList<Individuo> populacaoInicialReais(int tamanhoPopulacao, Scanner f) {
 
 		ArrayList<Individuo> populacaoInicial = new ArrayList<Individuo>();
@@ -240,7 +240,7 @@ class AG_F6Cruzamentos {
 		return new Cruzamento.UmPontoCorte(random).cruzar(pai1, pai2, this.probCruz);
 	}
 
-	// Mutação
+	// MutaÃ§Ã£o
 	private void mutacao(Individuo individuo) {
 
 		new GeneAGene(random).mutar(individuo, probMut);
@@ -256,7 +256,7 @@ class AG_F6Cruzamentos {
 			new AvaliacaoF6Modificada(this.precisao).avaliar(individuo);
 	}
 
-	// Ranqueamento da população
+	// Ranqueamento da populaÃ§Ã£o
 	public void rank() {
 
 		Collections.sort(this.populacao);
@@ -330,20 +330,20 @@ class AG_F6Cruzamentos {
 		double[] mutacoes = { 0.01 };
 		double[] cruzamentos = { 0.75 };
 		int[] populacoes = { 50 };
-		int nIteracoes = 500;
+		int nIteracoes = 100;
 		long[] seeds = { 123456, 654321, 765432, 234567, 987650 };
 		int numeroExecucoes = 5, numeroPopulacoes = 5;
 		boolean populacaoJaCriada = true;
 		String[] avaliacao = { "ScafferF6" };
 		double[] maxMinNorm = { 500, 1 };
 		boolean[] normalizado = { false };
-		//0 - Sem elitismo, 1 - com elitismo, 2 
+		//0 - Sem elitismo, 1 - com elitismo, 2 - Elitismo por estado estacionario
 		int[] tipoElitismo = {0};
 		int percentualElitismo = 10;
 		//0 - um ponto de corte, 1 - uniforme, 2 ou mais - multiplos pontos de corte
 		int[] tiposCruzamentos = {0,1,2};
 
-		for (int d = 0; d < tiposCruzamentos.length; d++) {
+		//for (int d = 0; d < tiposCruzamentos.length; d++) {
 		
 		for (int b = 0; b < tipoElitismo.length; b++) {
 
@@ -470,6 +470,8 @@ class AG_F6Cruzamentos {
 							arqMediaInd.close();
 							gravarArqMelhorPiorInd.close();
 							arqMelhorPiorInd.close();
+							gravarArqMediaMedias.close();
+							arqMediaMedias.close();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -478,7 +480,7 @@ class AG_F6Cruzamentos {
 				}
 			}
 			}
-		}
+//		}
 	}
 
 	public static void gravaPopulacaoInicial(ArrayList<Individuo> populacao, int k, long seed) {
